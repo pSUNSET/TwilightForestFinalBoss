@@ -1,0 +1,627 @@
+{
+  "type": "minecraft:entity",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 11.0,
+                "min": 6.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 4.0,
+                "min": 2.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:naga_scale"
+        }
+      ],
+      "name": "naga_scales",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:twilight_scepter"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:lifedrain_scepter"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:zombie_scepter"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:fortification_scepter"
+        }
+      ],
+      "name": "lich_scepters",
+      "rolls": {
+        "type": "twilightforest:multiplayer_rolls",
+        "default_rolls": {
+          "type": "minecraft:uniform",
+          "max": 2.0,
+          "min": 1.0
+        },
+        "per_player_rolls": {
+          "type": "minecraft:uniform",
+          "max": 1.0,
+          "min": -1.0
+        }
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 0.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "minecraft:ender_pearl"
+        }
+      ],
+      "name": "lich_pearls",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 0.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 8.0,
+                "min": 4.0
+              },
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "twilightforest:crown_splinter"
+        }
+      ],
+      "name": "lich_crown",
+      "rolls": {
+        "type": "twilightforest:multiplayer_rolls",
+        "default_rolls": 1.0,
+        "per_player_rolls": {
+          "type": "minecraft:uniform",
+          "max": 1.0,
+          "min": -1.0
+        }
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            }
+          ],
+          "name": "twilightforest:meef_stroganoff"
+        }
+      ],
+      "name": "minoshroom_stroganoff",
+      "rolls": {
+        "type": "twilightforest:multiplayer_rolls",
+        "default_rolls": {
+          "type": "minecraft:uniform",
+          "max": 2.0,
+          "min": 1.0
+        },
+        "per_player_rolls": {
+          "type": "minecraft:uniform",
+          "max": 1.0,
+          "min": -1.0
+        }
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": -2.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:diamond_minotaur_axe"
+        }
+      ],
+      "name": "minoshroom_axe",
+      "rolls": {
+        "type": "twilightforest:multiplayer_rolls",
+        "default_rolls": {
+          "type": "minecraft:uniform",
+          "max": 1.0,
+          "min": 0.0
+        },
+        "per_player_rolls": {
+          "type": "minecraft:uniform",
+          "max": 1.0,
+          "min": -1.0
+        }
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 35.0,
+                "min": 5.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 5.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:hydra_chop"
+        }
+      ],
+      "name": "hydra_chop",
+      "rolls": {
+        "type": "twilightforest:multiplayer_rolls",
+        "default_rolls": {
+          "type": "minecraft:uniform",
+          "max": 2.0,
+          "min": 1.0
+        },
+        "per_player_rolls": {
+          "type": "minecraft:uniform",
+          "max": 1.0,
+          "min": -1.0
+        }
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 7.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:fiery_blood"
+        }
+      ],
+      "name": "hydra_blood",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 20.0,
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "twilightforest:knightmetal_sword"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 20.0,
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "twilightforest:knightmetal_pickaxe"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 20.0,
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "twilightforest:knightmetal_axe"
+        }
+      ],
+      "name": "knight_phantom_weapon",
+      "rolls": {
+        "type": "minecraft:binomial",
+        "n": {
+          "type": "twilightforest:looting_rolls",
+          "base_value": {
+            "type": "twilightforest:multiplayer_rolls",
+            "default_rolls": 1.0,
+            "per_player_rolls": {
+              "type": "minecraft:uniform",
+              "max": 0.5,
+              "min": 0.0
+            }
+          },
+          "enchantment": "minecraft:looting"
+        },
+        "p": 0.4
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "twilightforest:phantom_helmet"
+        },
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:enchant_with_levels",
+              "levels": 30.0,
+              "options": "#minecraft:on_random_loot"
+            }
+          ],
+          "name": "twilightforest:phantom_chestplate"
+        }
+      ],
+      "name": "knight_phantom_rare_armor",
+      "rolls": {
+        "type": "minecraft:binomial",
+        "n": {
+          "type": "twilightforest:looting_rolls",
+          "base_value": {
+            "type": "twilightforest:multiplayer_rolls",
+            "default_rolls": 1.0,
+            "per_player_rolls": {
+              "type": "minecraft:uniform",
+              "max": 0.5,
+              "min": 0.0
+            }
+          },
+          "enchantment": "minecraft:looting"
+        },
+        "p": 0.4
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [],
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 6.0,
+                "min": 3.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:carminite"
+        }
+      ],
+      "name": "ur_ghast_carminite",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 12.0,
+                "min": 5.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 1.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:fiery_tears"
+        }
+      ],
+      "name": "ur_ghast_tears",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 5.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 3.0,
+                "min": 1.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:alpha_yeti_fur"
+        }
+      ],
+      "name": "alpha_yeti_fur",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 10.0,
+                "min": 5.0
+              },
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 1.0,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 2.0,
+                "min": 0.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:ice_bomb"
+        }
+      ],
+      "name": "alpha_yeti_bombs",
+      "rolls": {
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 0.0
+      }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:triple_bow"
+        },
+        {
+          "type": "minecraft:item",
+          "name": "twilightforest:seeker_bow"
+        }
+      ],
+      "name": "snow_queen_bows",
+      "rolls": {
+        "type": "minecraft:binomial",
+        "n": {
+          "type": "twilightforest:looting_rolls",
+          "base_value": {
+            "type": "twilightforest:multiplayer_rolls",
+            "default_rolls": 1.0,
+            "per_player_rolls": {
+              "type": "minecraft:uniform",
+              "max": 0.5,
+              "min": 0.0
+            }
+          },
+          "enchantment": "minecraft:looting"
+        },
+        "p": 0.8
+      }
+    }
+  ],
+  "random_sequence": "twilight_forest_final_boss:entities/castle_keeper"
+}

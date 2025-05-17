@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "equipment",
+  "ingredients": [
+    {
+      "item": "twilightforest:cube_talisman"
+    },
+    {
+      "item": "twilightforest:block_and_chain"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "twilightforest:cube_of_annihilation"
+  }
+}

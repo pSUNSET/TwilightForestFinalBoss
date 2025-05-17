@@ -1,0 +1,43 @@
+{
+  "display": {
+    "icon": {
+      "count": 1,
+      "id": "twilightforest:cube_talisman"
+    },
+    "title": {
+      "translate": "advancement.a_tussel_with_calamity.title"
+    },
+    "description": {
+      "translate": "advancement.a_tussel_with_calamity.desc",
+      "with": [
+        {
+          "translate": "entity.twilight_forest_final_boss.castle_keeper"
+        }
+      ]
+    },
+    "frame": "goal"
+  },
+  "criteria": {
+    "castle_keeper": {
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "entity": "this",
+            "predicate": {
+              "type": "twilight_forest_final_boss:castle_keeper"
+            }
+          }
+        ]
+      },
+      "trigger": "minecraft:player_killed_entity"
+    }
+  },
+  "requirements": [
+    [
+      "castle_keeper"
+    ]
+  ],
+  "parent": "twilightforest:progression_end",
+  "sends_telemetry_event": true
+}
