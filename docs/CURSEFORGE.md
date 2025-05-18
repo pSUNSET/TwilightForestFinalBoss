@@ -25,7 +25,10 @@ After getting the permission from the original author, D_Angry_Modder,
 this new project was created.
 
 It isn't just a copy of the original one, but a remake.
+There are several differences between this one and original one.
 I will continue to update this mod until the TwilightForest official mod updates its actual final boss.
+
+Finally, hope you enjoy this mod!
 
 ## Original Mod
 * [Twilight Forest Final Boss](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-final-boss) by [D_Angry_Modder](https://www.curseforge.com/members/d_angry_modder)
