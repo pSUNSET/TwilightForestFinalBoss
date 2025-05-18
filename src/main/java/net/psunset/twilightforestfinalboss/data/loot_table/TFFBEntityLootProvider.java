@@ -124,7 +124,14 @@ public class TFFBEntityLootProvider extends EntityLootSubProvider {
                         .name("snow_queen_bows")
                         .setRolls(new BinomialDistributionGenerator(LootingEnchantNumberProvider.applyLootingLevelTo(this.registries, MultiplayerBasedNumberProvider.rollsForPlayers(UniformGenerator.between(0.0F, 0.5F), ConstantValue.exactly(1.0F))), ConstantValue.exactly(0.8F)))
                         .add(LootItem.lootTableItem(TFItems.TRIPLE_BOW.get()))
-                        .add(LootItem.lootTableItem(TFItems.SEEKER_BOW.get()))));
+                        .add(LootItem.lootTableItem(TFItems.SEEKER_BOW.get())))
+                .withPool(LootPool.lootPool()
+                        .name("castle_keeper_cube_talisman")
+                        .setRolls(ConstantValue.exactly(1.0F))
+                        .add(LootItem.lootTableItem(TFItems.CUBE_TALISMAN.get())
+                                .apply(SetItemCountFunction.setCount(ConstantValue.exactly(1.0F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 0.4F)))
+                                .apply(MultiplayerBasedAdditionLootFunction.addForAllParticipatingPlayers(UniformGenerator.between(0.0F, 0.8F))))));
     }
 
     @Override

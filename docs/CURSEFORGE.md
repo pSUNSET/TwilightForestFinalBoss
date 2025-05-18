@@ -11,11 +11,16 @@ An additional mod to add the final boss to The Twilight Forest mod.
 ## Requirements
 * [The Twilight Forest](https://www.curseforge.com/minecraft/mc-mods/the-twilight-forest)
 * [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib)
+* [TwilightTweaks](https://www.curseforge.com/minecraft/mc-mods/twilight-tweaks)
+
+## Warning
+
+* The version shown in files is in the fixed format, `${mod_version}+${twilight_forest_version}+${mc_version}`. They mean the environment we successfully tested. If there's any problem to crash, please try the closer version of minecraft or twilight forest mod.
 
 ## Note
 
 This mod is a maintained version.
-The isn't updated anymore.
+The original one isn't updated anymore.
 After getting the permission from the original author, D_Angry_Modder,
 this new project was created.
 

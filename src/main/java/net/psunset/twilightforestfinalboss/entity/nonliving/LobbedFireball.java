@@ -15,12 +15,14 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.api.distmarker.OnlyIn;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
-@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class LobbedFireball extends AbstractArrow implements ItemSupplier {
     public static final ItemStack PROJECTILE_ITEM = new ItemStack(Items.FIRE_CHARGE);
 
@@ -56,6 +58,18 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
         entity.setArrowCount(entity.getArrowCount() - 1);
     }
 
+    @Override
+    protected void onHitBlock(BlockHitResult result) {
+        super.onHitBlock(result);
+        level().setBlockAndUpdate(result.getBlockPos().relative(result.getDirection()), Blocks.FIRE.defaultBlockState());
+    }
+
+    @Override
+    protected void onHitEntity(EntityHitResult result) {
+        super.onHitEntity(result);
+        result.getEntity().setRemainingFireTicks(100); // 5 secs
+    }
+
     public void tick() {
         super.tick();
 
@@ -66,6 +80,11 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
         if (this.inGround) {
             this.discard();
         }
+    }
+
+    @Override
+    public boolean isOnFire() {
+        return true;
     }
 
     public static LobbedFireball shoot(Level world, LivingEntity entity, RandomSource source) {

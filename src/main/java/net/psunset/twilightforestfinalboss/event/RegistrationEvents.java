@@ -2,8 +2,8 @@ package net.psunset.twilightforestfinalboss.event;
 
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
+import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.entity.boss.CastleKeeper;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
@@ -12,12 +12,12 @@ import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 public class RegistrationEvents {
 
     @SubscribeEvent
-    public static void init(FMLCommonSetupEvent event) {
-        event.enqueueWork(() -> CastleKeeper.init());
+    public static void onRegisterPlacements(RegisterSpawnPlacementsEvent event) {
+
     }
 
     @SubscribeEvent
-    public static void registerAttributes(EntityAttributeCreationEvent event) {
+    public static void onRegisterAttributes(EntityAttributeCreationEvent event) {
         event.put(TFFBEntities.CASTLE_KEEPER.get(), CastleKeeper.createAttributes().build());
     }
 }

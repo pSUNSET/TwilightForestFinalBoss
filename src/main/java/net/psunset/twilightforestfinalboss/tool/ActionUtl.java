@@ -8,7 +8,6 @@ import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import org.apache.commons.compress.utils.Lists;
 
 import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;

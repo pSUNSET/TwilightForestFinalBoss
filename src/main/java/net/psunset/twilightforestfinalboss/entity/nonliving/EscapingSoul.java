@@ -1,6 +1,5 @@
 package net.psunset.twilightforestfinalboss.entity.nonliving;
 
-import net.minecraft.ReportedException;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
@@ -21,7 +20,6 @@ import net.neoforged.api.distmarker.OnlyIn;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
-@OnlyIn(value = Dist.CLIENT, _interface = ItemSupplier.class)
 public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     public static final ItemStack EMPTY_ITEM = new ItemStack(Blocks.AIR);
 

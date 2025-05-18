@@ -621,6 +621,41 @@
         },
         "p": 0.8
       }
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            },
+            {
+              "count": {
+                "type": "minecraft:uniform",
+                "max": 0.4,
+                "min": 0.0
+              },
+              "enchantment": "minecraft:looting",
+              "function": "minecraft:enchanted_count_increase"
+            },
+            {
+              "extra_count_per_player": {
+                "type": "minecraft:uniform",
+                "max": 0.8,
+                "min": 0.0
+              },
+              "function": "twilightforest:multiplayer_addition"
+            }
+          ],
+          "name": "twilightforest:cube_talisman"
+        }
+      ],
+      "name": "castle_keeper_cube_talisman",
+      "rolls": 1.0
     }
   ],
   "random_sequence": "twilight_forest_final_boss:entities/castle_keeper"
