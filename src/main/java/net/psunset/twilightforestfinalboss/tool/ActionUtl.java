@@ -1,11 +1,11 @@
 package net.psunset.twilightforestfinalboss.tool;
 
+import com.google.common.collect.Lists;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.util.thread.SidedThreadGroups;
 import net.neoforged.neoforge.event.tick.ServerTickEvent;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
-import org.apache.commons.compress.utils.Lists;
 
 import java.util.AbstractMap;
 import java.util.Collection;
