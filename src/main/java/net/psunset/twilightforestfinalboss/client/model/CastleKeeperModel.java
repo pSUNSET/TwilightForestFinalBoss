@@ -19,7 +19,7 @@ public class CastleKeeperModel extends GeoModel<CastleKeeper> {
     }
 
     public ResourceLocation getTextureResource(CastleKeeper entity) {
-        return RLUtl.of("textures/entity/" + entity.getTexture() + ".png");
+        return RLUtl.of("textures/entity/castle_keeper/" + entity.getTexture() + ".png");
     }
 
     public void setCustomAnimations(CastleKeeper animatable, long instanceId, AnimationState animationState) {

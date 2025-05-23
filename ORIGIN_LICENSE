@@ -1,0 +1,10 @@
+Only the following files apply to this license!
+
+-------------------------------------------------
+src/main/resources/assets/twilight_forest_final_boss/animations/castle_keeper.animation.json
+src/main/resources/assets/twilight_forest_final_boss/geo/castle_keeper.geo.json
+src/main/resources/assets/twilight_forest_final_boss/textures/gallery/*
+src/main/resources/assets/twilight_forest_final_boss/textures/entity/castle_keeper/*
+-------------------------------------------------
+
+All rights of the files in the block reserved by D_Angry_Modder.

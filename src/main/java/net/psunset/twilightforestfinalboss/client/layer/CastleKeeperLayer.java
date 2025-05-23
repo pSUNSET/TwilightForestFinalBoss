@@ -14,7 +14,7 @@ import software.bernie.geckolib.renderer.GeoRenderer;
 import software.bernie.geckolib.renderer.layer.GeoRenderLayer;
 
 public class CastleKeeperLayer extends GeoRenderLayer<CastleKeeper> {
-    private static final ResourceLocation LAYER = RLUtl.of("textures/entity/castle_keeper_glow.png");
+    private static final ResourceLocation LAYER = RLUtl.of("textures/entity/castle_keeper/castle_keeper_glow.png");
 
     public CastleKeeperLayer(GeoRenderer<CastleKeeper> entityRenderer) {
         super(entityRenderer);
