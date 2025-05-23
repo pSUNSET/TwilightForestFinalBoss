@@ -4,9 +4,9 @@ An additional mod to add the final boss to Twilight Forest.
 
 ## Licensing
 
-Code unless otherwise stated default to our [LICENSE file](LICENSE).
-
 Some non-code assets created by D_Angry_Modder go by [ORIGIN_LICENSE file](ORIGIN_LICENSE).
+
+The other items all stated default to our [LICENSE file](LICENSE).
 
 ## Credit
 
