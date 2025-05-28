@@ -9,6 +9,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
+import net.psunset.twilightforestfinalboss.init.TFFBItems;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 import twilightforest.block.ForceFieldBlock;
 
@@ -20,6 +21,10 @@ public class TFFBItemModelProvider extends ItemModelProvider {
     @Override
     protected void registerModels() {
         forceField(TFFBBlocks.VIOLET_FRAGILE_FIELD, RLUtl.of("block/forcefield_white"));
+
+        TFFBItems.SPAWN_EGGS_REGISTRY.getEntries().forEach(entry -> {
+            spawnEggItem(entry.get());
+        });
     }
 
     private ItemModelBuilder forceField(DeferredBlock<ForceFieldBlock> block, ResourceLocation... layers) {

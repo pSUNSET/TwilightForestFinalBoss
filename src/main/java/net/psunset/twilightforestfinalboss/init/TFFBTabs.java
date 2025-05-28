@@ -16,7 +16,7 @@ public class TFFBTabs {
     @SubscribeEvent
     public static void buildTabContentsVanilla(BuildCreativeModeTabContentsEvent tabData) {
         if (tabData.getTabKey() == CreativeModeTabs.SPAWN_EGGS) {
-            tabData.accept(TFFBItems.CASTLE_KEEPER_SPAWN_EGG.get());
+            TFFBItems.SPAWN_EGGS_REGISTRY.getEntries().forEach(entry -> tabData.accept(entry.get()));
         }
     }
 }

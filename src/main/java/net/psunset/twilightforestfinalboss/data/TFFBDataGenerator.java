@@ -10,6 +10,7 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.data.blockstates.TFFBBlockStateProvider;
+import net.psunset.twilightforestfinalboss.data.lang.TFFBLangProvider;
 import net.psunset.twilightforestfinalboss.data.loot_table.TFFBLootTableProvider;
 import net.psunset.twilightforestfinalboss.data.models.TFFBItemModelProvider;
 import net.psunset.twilightforestfinalboss.data.tags.TFFBBlockTagsProvider;
@@ -33,6 +34,8 @@ public class TFFBDataGenerator {
 
         generator.addProvider(isClient, new TFFBBlockStateProvider(output, fileHelper));
         generator.addProvider(isClient, new TFFBItemModelProvider(output, fileHelper));
+
+        generator.addProvider(isClient, new TFFBLangProvider(output));
 
         generator.addProvider(isServer, new TFFBLootTableProvider(output, registries));
 

@@ -21,6 +21,8 @@ public class TwilightForestFinalBoss {
     public TwilightForestFinalBoss(ModContainer container, IEventBus bus, Dist dist) {
         TFFBBlocks.REGISTRY.register(bus);
         TFFBItems.REGISTRY.register(bus);
+        TFFBItems.BLOCK_ITEMS_REGISTRY.register(bus);
+        TFFBItems.SPAWN_EGGS_REGISTRY.register(bus);
         TFFBEntities.REGISTRY.register(bus);
         TFFBTabs.REGISTRY.register(bus);
     }
