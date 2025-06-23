@@ -5,10 +5,10 @@
       "id": "twilightforest:cube_of_annihilation"
     },
     "title": {
-      "translate": "advancement.no_stone_left_unturned.title"
+      "translate": "advancement.twilight_forest_final_boss.no_stone_left_unturned.title"
     },
     "description": {
-      "translate": "advancement.no_stone_left_unturned.desc",
+      "translate": "advancement.twilight_forest_final_boss.no_stone_left_unturned.desc",
       "with": [
         {
           "translate": "item.twilightforest.cube_of_annihilation"

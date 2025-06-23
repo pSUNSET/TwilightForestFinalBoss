@@ -5,10 +5,10 @@
       "id": "twilightforest:cube_talisman"
     },
     "title": {
-      "translate": "advancement.a_tussel_with_calamity.title"
+      "translate": "advancement.twilight_forest_final_boss.a_tussel_with_calamity.title"
     },
     "description": {
-      "translate": "advancement.a_tussel_with_calamity.desc",
+      "translate": "advancement.twilight_forest_final_boss.a_tussel_with_calamity.desc",
       "with": [
         {
           "translate": "entity.twilight_forest_final_boss.castle_keeper"
