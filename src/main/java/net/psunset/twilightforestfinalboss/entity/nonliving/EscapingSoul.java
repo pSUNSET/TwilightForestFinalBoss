@@ -36,9 +36,8 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity p_entity) {
-//        return NetworkHooks.getEntitySpawningPacket(this);
-        return super.getAddEntityPacket(p_entity);
+    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
+        return super.getAddEntityPacket(entity);
     }
 
     @Override
