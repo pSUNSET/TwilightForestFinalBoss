@@ -16,4 +16,4 @@ Maintain by [@Project-SUNSET](https://github.com/pSUNSET)
 
 ## Download
 
-* [CurseForge](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-final-boss)
+* [CurseForge](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-final-boss-remake)
