@@ -3,9 +3,9 @@ package net.psunset.twilightforestfinalboss.data.blockstates;
 import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
@@ -15,10 +15,10 @@ import twilightforest.client.model.block.forcefield.ForceFieldModelBuilder;
 
 public class TFFBBlockStateProvider extends BlockStateProvider {
 
-    protected static final ResourceLocation SOLID = ResourceLocation.withDefaultNamespace("solid");
-    protected static final ResourceLocation CUTOUT = ResourceLocation.withDefaultNamespace("cutout");
-    protected static final ResourceLocation CUTOUT_MIPPED = ResourceLocation.withDefaultNamespace("cutout_mipped");
-    protected static final ResourceLocation TRANSLUCENT = ResourceLocation.withDefaultNamespace("translucent");
+    protected static final ResourceLocation SOLID = new ResourceLocation("solid");
+    protected static final ResourceLocation CUTOUT = new ResourceLocation("cutout");
+    protected static final ResourceLocation CUTOUT_MIPPED = new ResourceLocation("cutout_mipped");
+    protected static final ResourceLocation TRANSLUCENT = new ResourceLocation("translucent");
 
     public TFFBBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
         super(output, TwilightForestFinalBoss.ID, exFileHelper);
@@ -29,9 +29,9 @@ public class TFFBBlockStateProvider extends BlockStateProvider {
         forceFieldLike(TFFBBlocks.VIOLET_FRAGILE_FIELD);
     }
 
-    public void forceFieldLike(DeferredBlock<ForceFieldBlock> block) {
+    public void forceFieldLike(RegistryObject<ForceFieldBlock> block) {
         ResourceLocation textureLocation = RLUtl.of("block/" + block.getId().getPath());
-        simpleBlock(block.get(), models().withExistingParent(block.getId().getPath(), ResourceLocation.withDefaultNamespace("block/block"))
+        simpleBlock(block.get(), models().withExistingParent(block.getId().getPath(), new ResourceLocation("block/block"))
 				.texture("particle", textureLocation)
 				.texture("pane", textureLocation)
 				.ao(false)

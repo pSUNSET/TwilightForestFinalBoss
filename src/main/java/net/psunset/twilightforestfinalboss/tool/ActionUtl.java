@@ -1,10 +1,10 @@
 package net.psunset.twilightforestfinalboss.tool;
 
 import com.google.common.collect.Lists;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.util.thread.SidedThreadGroups;
-import net.neoforged.neoforge.event.tick.ServerTickEvent;
+import net.minecraftforge.event.TickEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.util.thread.SidedThreadGroups;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 
 import java.util.AbstractMap;
@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-@EventBusSubscriber(modid = TwilightForestFinalBoss.ID)
+@Mod.EventBusSubscriber(modid = TwilightForestFinalBoss.ID)
 public class ActionUtl {
 
     private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
@@ -24,15 +24,17 @@ public class ActionUtl {
     }
 
     @SubscribeEvent
-    protected static void afterServerTick(ServerTickEvent.Post event){
-        List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = Lists.newArrayList();
-        workQueue.forEach(it -> {
-            it.setValue(it.getValue() - 1);
-            if (it.getValue() == 0) {
-                actions.add(it);
-            }
-        });
-        actions.forEach(it -> it.getKey().run());
-        workQueue.removeAll(actions);
+    public static void afterServerTick(TickEvent.ServerTickEvent event){
+        if (event.phase == TickEvent.Phase.END) { // ServerTickEvent.Post in NeoForge
+            List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = Lists.newArrayList();
+            workQueue.forEach(it -> {
+                it.setValue(it.getValue() - 1);
+                if (it.getValue() == 0) {
+                    actions.add(it);
+                }
+            });
+            actions.forEach(it -> it.getKey().run());
+            workQueue.removeAll(actions);
+        }
     }
 }

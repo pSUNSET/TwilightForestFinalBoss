@@ -7,7 +7,7 @@ import net.minecraft.world.entity.MobSpawnType;
 import net.minecraft.world.level.ServerLevelAccessor;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
-import net.neoforged.neoforge.event.EventHooks;
+import net.minecraftforge.event.ForgeEventFactory;
 import net.psunset.twilightforestfinalboss.entity.boss.CastleKeeper;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
@@ -25,8 +25,8 @@ public abstract class FinalBossSpawnerBlockEntityMixin extends BossSpawnerBlockE
         super(type, entityType, pos, state);
     }
 
-    @Inject(method = "spawnMyBoss", at = @At("HEAD"), cancellable = true)
-    public void beforeSpawnMyBoss(ServerLevelAccessor accessor, CallbackInfoReturnable<Boolean> cir) {
+    @Inject(method = "spawnMyBoss", at = @At("HEAD"), cancellable = true, remap = false)
+    protected void beforeSpawnMyBoss(ServerLevelAccessor accessor, CallbackInfoReturnable<Boolean> cir) {
         BlockPos.betweenClosed(this.getBlockPos().offset(-10, -1, -10), getBlockPos().offset(-10, 11, 10)).forEach(it -> {
             if (level.getBlockState(it).is(TFFBBlocks.VIOLET_FRAGILE_FIELD.get())) {
                 level.removeBlock(it, false);
@@ -57,7 +57,7 @@ public abstract class FinalBossSpawnerBlockEntityMixin extends BossSpawnerBlockE
 
         BlockPos spawnPos = accessor.getBlockState(this.getBlockPos().below()).getCollisionShape(accessor, this.getBlockPos().below()).isEmpty() ? this.getBlockPos().below() : this.getBlockPos();
         entity.moveTo(spawnPos, accessor.getLevel().getRandom().nextFloat() * 360F, 0.0F);
-        EventHooks.finalizeMobSpawn(entity, accessor, accessor.getCurrentDifficultyAt(spawnPos), MobSpawnType.SPAWNER, null);
+        ForgeEventFactory.onFinalizeSpawnSpawner(entity, accessor, accessor.getCurrentDifficultyAt(spawnPos), null, null, null);
 
         // set creature's home to this
 //        this.initializeCreature(entity);

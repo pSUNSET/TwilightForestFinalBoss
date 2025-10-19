@@ -2,11 +2,11 @@ package net.psunset.twilightforestfinalboss.data.models;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
-import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
-import net.neoforged.neoforge.client.model.generators.loaders.ItemLayerModelBuilder;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.registries.DeferredBlock;
+import net.minecraftforge.client.model.generators.ItemModelBuilder;
+import net.minecraftforge.client.model.generators.ItemModelProvider;
+import net.minecraftforge.client.model.generators.loaders.ItemLayerModelBuilder;
+import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.RegistryObject;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.init.TFFBItems;
@@ -22,12 +22,12 @@ public class TFFBItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         forceField(TFFBBlocks.VIOLET_FRAGILE_FIELD, RLUtl.of("block/forcefield_white"));
 
-        TFFBItems.SPAWN_EGGS_REGISTRY.getEntries().forEach(entry -> {
-            spawnEggItem(entry.get());
+        TFFBItems.SPAWN_EGGS_REGISTRY.getEntries().forEach(item -> {
+            getBuilder(item.getId().getPath()).parent(getExistingFile(new ResourceLocation("item/template_spawn_egg")));
         });
     }
 
-    private ItemModelBuilder forceField(DeferredBlock<ForceFieldBlock> block, ResourceLocation... layers) {
+    private ItemModelBuilder forceField(RegistryObject<ForceFieldBlock> block, ResourceLocation... layers) {
         ItemModelBuilder builder = withExistingParent(block.getId().getPath(), "item/generated");
         for (int i = 0; i < layers.length; i++) {
             builder = builder.texture("layer" + i, layers[i]);

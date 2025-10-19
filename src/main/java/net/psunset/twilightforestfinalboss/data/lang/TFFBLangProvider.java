@@ -2,8 +2,8 @@ package net.psunset.twilightforestfinalboss.data.lang;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.entity.EntityType;
-import net.neoforged.neoforge.common.data.LanguageProvider;
-import net.neoforged.neoforge.registries.DeferredHolder;
+import net.minecraftforge.common.data.LanguageProvider;
+import net.minecraftforge.registries.RegistryObject;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
@@ -24,7 +24,7 @@ public class TFFBLangProvider extends LanguageProvider {
         addAdvancement("no_stone_left_unturned", "No Stone Left Unturned", "Combine the talisman of the cube, a block and chain, and a lamp of cinders to create the cube of annihilation");
     }
 
-    public void addEntityAndEgg(DeferredHolder<EntityType<?>, ? extends EntityType<?>> entity, String name) {
+    public void addEntityAndEgg(RegistryObject<? extends EntityType<?>> entity, String name) {
         this.addEntityType(entity, name);
         this.add("item." + TwilightForestFinalBoss.ID + "." + entity.getId().getPath() + "_spawn_egg", name + " Spawn Egg");
     }

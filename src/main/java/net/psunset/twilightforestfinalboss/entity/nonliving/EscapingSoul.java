@@ -15,8 +15,9 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.network.NetworkHooks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
@@ -28,16 +29,16 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     }
 
     public EscapingSoul(EntityType<? extends EscapingSoul> type, double x, double y, double z, Level world) {
-        super(type, x, y, z, world, EMPTY_ITEM, null);
+        super(type, x, y, z, world);
     }
 
     public EscapingSoul(EntityType<? extends EscapingSoul> type, LivingEntity entity, Level world) {
-        super(type, entity, world, EMPTY_ITEM, null);
+        super(type, entity, world);
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
-        return super.getAddEntityPacket(entity);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
@@ -47,7 +48,7 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     }
 
     @Override
-    protected ItemStack getDefaultPickupItem() {
+    protected ItemStack getPickupItem() {
         return EMPTY_ITEM;
     }
 

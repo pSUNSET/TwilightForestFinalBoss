@@ -1,10 +1,8 @@
 package net.psunset.twilightforestfinalboss;
 
 import com.mojang.logging.LogUtils;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.init.TFFBItems;
@@ -18,7 +16,9 @@ public class TwilightForestFinalBoss {
     public static final String ID = "twilight_forest_final_boss";
 //    private static final String PROTOCOL_VERSION = "1";
 
-    public TwilightForestFinalBoss(ModContainer container, IEventBus bus, Dist dist) {
+    public TwilightForestFinalBoss() {
+        var bus = FMLJavaModLoadingContext.get().getModEventBus();
+
         TFFBBlocks.REGISTRY.register(bus);
         TFFBItems.REGISTRY.register(bus);
         TFFBItems.BLOCK_ITEMS_REGISTRY.register(bus);

@@ -1,11 +1,11 @@
-modLoader = "javafml"
-loaderVersion = "[4,)"
-license = "MIT"
+modLoader="javafml"
+loaderVersion="[47,)"
+license="MIT"
 
 [[mods]]
 modId = "${mod_id}"
 version = "${mod_version}"
-displayName = "Twilight Forest Final Boss"
+displayName = "Twilight Forest Final Boss (remake)"
 authors = "D_Angry_Modder, LShiftLess"
 description = '''An additional mod to add the final boss to Twilight Forest.'''
 logoFile = "icon.png"
@@ -14,35 +14,29 @@ logoFile = "icon.png"
 config = "twilightforestfinalboss.mixins.json"
 
 [[dependencies."${mod_id}"]]
-modId = "neoforge"
-type = "required"
-versionRange = "${neo_version_range}"
+modId = "forge"
+mandatory=true
+versionRange = "${forge_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "minecraft"
-type = "required"
+mandatory=true
 versionRange = "${minecraft_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "geckolib"
-type = "required"
+mandatory=true
 versionRange = "${geckolib_version_range}"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies."${mod_id}"]]
 modId = "twilightforest"
-type = "required"
+mandatory=true
 versionRange = "${twilightforest_version_range}"
 ordering = "NONE"
 side = "BOTH"
-
-
-
-
-
-

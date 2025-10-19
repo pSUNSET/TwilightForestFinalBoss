@@ -18,8 +18,9 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
+import net.minecraftforge.network.NetworkHooks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
@@ -31,27 +32,30 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
     }
 
     public LobbedFireball(EntityType<? extends LobbedFireball> type, double x, double y, double z, Level world) {
-        super(type, x, y, z, world, PROJECTILE_ITEM, null);
+        super(type, x, y, z, world);
     }
 
     public LobbedFireball(EntityType<? extends LobbedFireball> type, LivingEntity entity, Level world) {
-        super(type, entity, world, PROJECTILE_ITEM, null);
+        super(type, entity, world);
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
-        return super.getAddEntityPacket(entity);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
+    @Override
     @OnlyIn(Dist.CLIENT)
     public ItemStack getItem() {
         return PROJECTILE_ITEM;
     }
 
-    protected ItemStack getDefaultPickupItem() {
+    @Override
+    protected ItemStack getPickupItem() {
         return PROJECTILE_ITEM;
     }
 
+    @Override
     protected void doPostHurtEffects(LivingEntity entity) {
         super.doPostHurtEffects(entity);
         entity.setArrowCount(entity.getArrowCount() - 1);
@@ -69,6 +73,7 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
         result.getEntity().setRemainingFireTicks(100); // 5 secs
     }
 
+    @Override
     public void tick() {
         super.tick();
 

@@ -7,11 +7,11 @@ import twilightforest.TwilightForestMod;
 public class RLUtl {
 
     public static ResourceLocation of(String name) {
-        return ResourceLocation.fromNamespaceAndPath(TwilightForestFinalBoss.ID, name);
+        return new ResourceLocation(TwilightForestFinalBoss.ID, name);
     }
 
     public static ResourceLocation ofVanilla(String name) {
-        return ResourceLocation.withDefaultNamespace(name);
+        return new ResourceLocation(name);
     }
 
     public static ResourceLocation ofTF(String path) {

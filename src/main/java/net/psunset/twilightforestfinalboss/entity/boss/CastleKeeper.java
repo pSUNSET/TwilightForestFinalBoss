@@ -13,7 +13,6 @@ import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.server.level.ServerEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -37,7 +36,6 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.*;
-import net.minecraft.world.entity.projectile.windcharge.WindCharge;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.ServerLevelAccessor;
@@ -46,18 +44,19 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.network.NetworkHooks;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.ActionUtl;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.core.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.core.animation.AnimatableManager;
+import software.bernie.geckolib.core.animation.AnimationController;
+import software.bernie.geckolib.core.animation.RawAnimation;
+import software.bernie.geckolib.core.object.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
-import twilightforest.TwilightForestMod;
-import twilightforest.entity.boss.BaseTFBoss;
 import twilightforest.entity.boss.Lich;
 import twilightforest.init.TFBlocks;
 import twilightforest.init.TFEntities;
@@ -71,13 +70,13 @@ import java.util.function.Consumer;
 public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     public static final EntityDataAccessor<String> DATA_ANIMATION = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<String> DATA_TEXTURE = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.STRING);
-    public static final EntityDataAccessor<Integer> DATA_HP_PHASE = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> DATA_SHOOT_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_SWING_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_STOMP_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_SPOUT_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
-    public static final Map<BaseTFBoss, CastleKeeper> childToParent = Maps.newHashMap();
+    public static final Map<Mob, CastleKeeper> CHILDREN_TO_PARENT = Maps.newHashMap();
     private final AnimatableInstanceCache cache;
+    private byte midHpPhase;
     public String animation;
     String oAnimation;
 
@@ -87,20 +86,20 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         this.animation = "empty";
         this.oAnimation = "empty";
         this.xpReward = 999;
+        this.midHpPhase = 0;
         this.setNoAi(false);
         this.setPersistenceRequired();
     }
 
     @Override
-    protected void defineSynchedData(SynchedEntityData.Builder builder) {
-        super.defineSynchedData(builder);
-        builder.define(DATA_ANIMATION, "undefined");
-        builder.define(DATA_TEXTURE, "castle_keeper");
-        builder.define(DATA_HP_PHASE, 0);
-        builder.define(DATA_SHOOT_CD, 0);
-        builder.define(DATA_SWING_CD, 0);
-        builder.define(DATA_STOMP_CD, 0);
-        builder.define(DATA_SPOUT_CD, 0);
+    protected void defineSynchedData() {
+        super.defineSynchedData();
+        this.getEntityData().define(DATA_ANIMATION, "undefined");
+        this.getEntityData().define(DATA_TEXTURE, "castle_keeper");
+        this.getEntityData().define(DATA_SHOOT_CD, 0);
+        this.getEntityData().define(DATA_SWING_CD, 0);
+        this.getEntityData().define(DATA_STOMP_CD, 0);
+        this.getEntityData().define(DATA_SPOUT_CD, 0);
     }
 
     @Override
@@ -123,12 +122,12 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 .add(Attributes.MOVEMENT_SPEED, 0.25F)
                 .add(Attributes.MAX_HEALTH, 500.0F)
                 .add(Attributes.ARMOR, 25.0F)
-                .add(Attributes.ENTITY_INTERACTION_RANGE, 4.0F)
+//                .add(Attributes.ENTITY_INTERACTION_RANGE, 4.0F)
                 .add(Attributes.ATTACK_DAMAGE, 6.0F)
                 .add(Attributes.FOLLOW_RANGE, 64.0F)
                 .add(Attributes.KNOCKBACK_RESISTANCE, 999.0F)
-                .add(Attributes.ATTACK_KNOCKBACK, 3.0F)
-                .add(Attributes.STEP_HEIGHT, 1.6D);
+                .add(Attributes.ATTACK_KNOCKBACK, 3.0F);
+//                .add(Attributes.STEP_HEIGHT, 1.6D);
     }
 
     public void setTexture(String texture) {
@@ -139,12 +138,12 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         return this.entityData.get(DATA_TEXTURE);
     }
 
-    public int getMidHPPhase() {
-        return this.entityData.get(DATA_HP_PHASE);
+    public byte getMidHPPhase() {
+        return this.midHpPhase;
     }
 
     public void progressMidHPPhase() {
-        entityData.set(DATA_HP_PHASE, entityData.get(DATA_HP_PHASE) + 1);
+        this.midHpPhase++;
     }
 
     private void progressAttackCooldown() {
@@ -167,17 +166,16 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     }
 
     @Override
-    public Packet<ClientGamePacketListener> getAddEntityPacket(ServerEntity entity) {
-//        return NetworkHooks.getEntitySpawningPacket(this);
-        return super.getAddEntityPacket(entity);
+    public Packet<ClientGamePacketListener> getAddEntityPacket() {
+        return NetworkHooks.getEntitySpawningPacket(this);
     }
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (childToParent.values().stream().anyMatch(it -> it.equals(this))) return false;
+        if (CHILDREN_TO_PARENT.values().stream().anyMatch(it -> it.getUUID().equals(this.getUUID()))) return false;
         if (getMidHPPhase() >= 2) {
             Entity entity = source.getDirectEntity();
-            if (entity instanceof AbstractArrow || entity instanceof WindCharge) {
+            if (entity instanceof AbstractArrow) { // || entity instanceof WindCharge
                 return false;
             }
         }
@@ -203,13 +201,13 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.NAGA.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                     });
 
                     it.delayServerAction(20, _it -> {
                         _it.spawnNearby(TFEntities.NAGA.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                         });
                     });
                 });
@@ -239,7 +237,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.LICH.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                     });
                     delayServerAction(20, _it -> {
                         _it.spawnNearby(TFEntities.ARMORED_GIANT.get());
@@ -265,7 +263,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.SNOW_QUEEN.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                     });
                 });
 
@@ -273,7 +271,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                     delayServerAction(20, it -> {
                         it.spawnNearby(TFEntities.ALPHA_YETI.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                         });
                     });
                 }
@@ -290,12 +288,12 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.HYDRA.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                     });
                     it.delayServerAction(20, _it -> {
                         _it.spawnNearby(TFEntities.UR_GHAST.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                         });
                     });
                 });
@@ -304,13 +302,13 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                     delayServerAction(20, it -> {
                         it.spawnNearby(TFEntities.MINOSHROOM.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                         });
                         it.delayServerAction(20, _it -> {
                             for (int i = 0; i < 6; ++i) {
                                 _it.spawnNearby(TFEntities.KNIGHT_PHANTOM.get(), child -> {
                                     child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                                    childToParent.put(child, CastleKeeper.this);
+                                    CHILDREN_TO_PARENT.put(child, CastleKeeper.this);
                                 });
                             }
                         });
@@ -333,11 +331,11 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     }
 
     @Override
-    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData) {
+    public @Nullable SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, MobSpawnType spawnType, @Nullable SpawnGroupData spawnGroupData, @Nullable CompoundTag pDataTag) {
         if (this.level().getDifficulty() != Difficulty.EASY && this.getAttribute(Attributes.MAX_HEALTH) != null) {
             boolean hard = this.level().getDifficulty() == Difficulty.HARD;
-            AttributeModifier modifier = new AttributeModifier(TwilightForestMod.prefix("difficulty_health_boost"), hard ? 100 : 60, AttributeModifier.Operation.ADD_VALUE);
-            if (!Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).hasModifier(modifier.id())) {
+            AttributeModifier modifier = new AttributeModifier("Difficulty Health Boost", hard ? 100 : 60, AttributeModifier.Operation.ADDITION);
+            if (!Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).hasModifier(modifier)) {
                 Objects.requireNonNull(this.getAttribute(Attributes.MAX_HEALTH)).addPermanentModifier(modifier);
                 this.setHealth(this.getMaxHealth());
             }
@@ -350,6 +348,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putString("Texture", this.getTexture());
+        compound.putByte("Phase", this.getMidHPPhase());
     }
 
     @Override
@@ -357,6 +356,9 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         super.readAdditionalSaveData(compound);
         if (compound.contains("Texture")) {
             this.setTexture(compound.getString("Texture"));
+        }
+        if (compound.contains("Phase")) {
+            this.midHpPhase = (compound.getByte("Phase"));
         }
     }
 
@@ -377,13 +379,13 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         this.refreshDimensions();
     }
 
-    @Override
-    public EntityDimensions getDefaultDimensions(Pose pose) {
-        return super.getDefaultDimensions(pose).scale(1.0F);
-    }
+//    @Override
+//    public EntityDimensions getDefaultDimensions(Pose pose) {
+//        return super.getDefaultDimensions(pose).scale(1.0F);
+//    }
 
     @Override
-    public boolean canChangeDimensions(Level oldLevel, Level newLevel) {
+    public boolean canChangeDimensions() {
         return false;
     }
 
@@ -408,8 +410,8 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     }
 
     @Override
-    public int getBossBarColor() {
-        return 0xDD2233;
+    public BossEvent.BossBarColor getBossBarColor() {
+        return BossEvent.BossBarColor.RED;
     }
 
     @Override
@@ -421,7 +423,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
             TwilightForestFinalBoss.LOGGER.info("Summoning escaping souls");
             AbstractArrow arrow = TFFBEntities.ESCAPING_SOUL.get().create(level());
             arrow.setBaseDamage(5.0F);
-//                arrow.setKnockback(1);
+//            arrow.setKnockback(1);
             arrow.moveTo(position());
             arrow.shoot(Mth.nextDouble(random, -0.4, 0.4), 3.5F, Mth.nextDouble(random, -0.4, 0.4), 2.0F, 0.0F);
             level().addFreshEntity(arrow);
@@ -443,13 +445,12 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                     this.tickBossBar();
                 }
             } else {
-                // using geckolib
-//                this.tickDeathAnimation();
+                this.tickDeathAnimation();
             }
         }
     }
 
-    private PlayState movementPredicate(AnimationState event) {
+    private PlayState movementPredicate(software.bernie.geckolib.core.animation.AnimationState<CastleKeeper> event) {
         if (this.animation.equals("empty")) {
             if (!event.isMoving() && event.getLimbSwingAmount() > -0.15F && event.getLimbSwingAmount() < 0.15F) {
                 return this.isDeadOrDying() ? event.setAndContinue(RawAnimation.begin().thenPlay("death")) : event.setAndContinue(RawAnimation.begin().thenLoop("idle"));
@@ -461,7 +462,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         }
     }
 
-    private PlayState procedurePredicate(AnimationState event) {
+    private PlayState procedurePredicate(software.bernie.geckolib.core.animation.AnimationState<CastleKeeper> event) {
         if (!this.animation.equals("empty") && event.getController().getAnimationState() == AnimationController.State.STOPPED || !this.animation.equals(this.oAnimation) && !this.animation.equals("empty")) {
             if (!this.animation.equals(this.oAnimation)) {
                 event.getController().forceAnimationReset();
@@ -589,7 +590,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 getTarget().position().add(Mth.nextInt(random, -8, 8), 10.0, Mth.nextInt(random, -8, 8)) :
                 new Vec3(getX() + Mth.nextInt(random, -20, 20), getEyeY() + 10.0, getZ() + Mth.nextInt(random, -20, 20));
         Vec3 movement = new Vec3(random.nextGaussian() * 0.01, -10.0, random.nextGaussian() * 0.01).normalize();
-        T projectile = factory.create(level(), this, movement);
+        T projectile = factory.create(level(), this, movement.x, movement.y, movement.z);
         if (projectile == null) return null;
         projectile.setPosRaw(start.x, start.y, start.z);
         if (spawnCallback != null) spawnCallback.accept(projectile);
@@ -599,7 +600,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
 
     @FunctionalInterface
     public interface AbstractHurtingProjectileFactory<T extends AbstractHurtingProjectile> {
-        T create(Level level, LivingEntity owner, Vec3 movement);
+        T create(Level level, LivingEntity owner, double deltaX, double deltaY, double deltaZ);
     }
 
     static class CastleKeeperShootAttackGoal extends Goal {
@@ -639,7 +640,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
 
             } else if (attackTimer >= 20 && attackTimer <= ATTACK_DURATION) {
                 if (attackTimer % (10 - (difficulty * 2)) == 0) {
-                    keeper.shoot((_level, _owner, _movement) -> new LargeFireball(_level, _owner, _movement, keeper.getRandom().nextInt(1, 4)), it -> it.setRemainingFireTicks(99999));
+                    keeper.shoot((_level, _owner, deltaX, deltaY, deltaZ) -> new LargeFireball(_level, _owner, deltaX, deltaY, deltaZ, keeper.getRandom().nextInt(1, 4)), it -> it.setRemainingFireTicks(99999));
 
                     for (int i = 0; i < 5; i++) {
                         keeper.shoot(SmallFireball::new, it -> it.setRemainingFireTicks(99999));
@@ -708,7 +709,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
 
                         for (Entity entityInside : it.level().getEntitiesOfClass(Entity.class, (new AABB(center, center)).inflate(1.0F), (e) -> true).stream().sorted(Comparator.comparingDouble(_it -> _it.distanceToSqr(center))).toList()) {
                             if (entityInside != it) {
-                                entityInside.hurt(new DamageSource(it.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MOB_ATTACK), it), 8.0F + difficulty);
+                                entityInside.hurt(new DamageSource(it.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MOB_ATTACK), it), 8.0F + difficulty);
                             }
                         }
                     });
@@ -767,8 +768,9 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
 
                 for (Entity entityInside : keeper.level().getEntitiesOfClass(Entity.class, (new AABB(keeper.position(), keeper.position())).inflate(4.0F + (difficulty / 2.0F)), (e) -> true).stream().sorted(Comparator.comparingDouble(it -> it.distanceToSqr(keeper.position()))).toList()) {
                     if (entityInside.getType().getCategory().isFriendly()) {
-                        entityInside.hurt(new DamageSource(keeper.registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MOB_ATTACK), keeper), 9.0F + difficulty);
-                        entityInside.push(new Vec3(entityInside.position().x - keeper.position().x, 5.0, entityInside.position().z - keeper.position().z).normalize().multiply(2.0F, 2.5F, 2.0F));
+                        entityInside.hurt(new DamageSource(keeper.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(DamageTypes.MOB_ATTACK), keeper), 9.0F + difficulty);
+                        var delta = new Vec3(entityInside.position().x - keeper.position().x, 5.0, entityInside.position().z - keeper.position().z).normalize().multiply(2.0F, 2.5F, 2.0F);
+                        entityInside.push(delta.x, delta.y, delta.z);
                     }
                 }
 

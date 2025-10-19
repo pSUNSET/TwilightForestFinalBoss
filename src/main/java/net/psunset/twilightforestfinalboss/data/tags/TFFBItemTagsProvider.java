@@ -4,7 +4,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.minecraftforge.common.data.ExistingFileHelper;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import org.jetbrains.annotations.Nullable;
@@ -13,7 +13,7 @@ import twilightforest.data.tags.compat.ModdedItemTagGenerator;
 import java.util.concurrent.CompletableFuture;
 
 public class TFFBItemTagsProvider extends ItemTagsProvider {
-    public TFFBItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, @Nullable ExistingFileHelper existingFileHelper) {
+    public TFFBItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, CompletableFuture<TagLookup<Block>> blockTags, ExistingFileHelper existingFileHelper) {
         super(output, lookupProvider, blockTags, TwilightForestFinalBoss.ID, existingFileHelper);
     }
 
