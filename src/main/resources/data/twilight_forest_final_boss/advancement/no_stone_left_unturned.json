@@ -18,7 +18,7 @@
     "frame": "goal"
   },
   "criteria": {
-    "no_stone_left_unturned_0": {
+    "annihilation_cube": {
       "conditions": {
         "items": [
           {
@@ -31,7 +31,7 @@
   },
   "requirements": [
     [
-      "no_stone_left_unturned_0"
+      "annihilation_cube"
     ]
   ],
   "parent": "twilight_forest_final_boss:a_tussel_with_calamity",
