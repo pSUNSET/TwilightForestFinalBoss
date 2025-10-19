@@ -71,13 +71,13 @@ import java.util.function.Consumer;
 public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     public static final EntityDataAccessor<String> DATA_ANIMATION = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.STRING);
     public static final EntityDataAccessor<String> DATA_TEXTURE = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.STRING);
-    public static final EntityDataAccessor<Integer> DATA_HP_PHASE = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT);
     public static final EntityDataAccessor<Integer> DATA_SHOOT_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_SWING_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_STOMP_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_SPOUT_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
-    public static final Map<BaseTFBoss, CastleKeeper> childToParent = Maps.newHashMap();
+    public static final Map<BaseTFBoss, CastleKeeper> CHILD_TO_PARENT = Maps.newHashMap();
     private final AnimatableInstanceCache cache;
+    private byte midHpPhase;
     public String animation;
     String oAnimation;
 
@@ -87,6 +87,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         this.animation = "empty";
         this.oAnimation = "empty";
         this.xpReward = 999;
+        this.midHpPhase = 0;
         this.setNoAi(false);
         this.setPersistenceRequired();
     }
@@ -96,7 +97,6 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         super.defineSynchedData(builder);
         builder.define(DATA_ANIMATION, "undefined");
         builder.define(DATA_TEXTURE, "castle_keeper");
-        builder.define(DATA_HP_PHASE, 0);
         builder.define(DATA_SHOOT_CD, 0);
         builder.define(DATA_SWING_CD, 0);
         builder.define(DATA_STOMP_CD, 0);
@@ -139,12 +139,12 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         return this.entityData.get(DATA_TEXTURE);
     }
 
-    public int getMidHPPhase() {
-        return this.entityData.get(DATA_HP_PHASE);
+    public byte getMidHPPhase() {
+        return this.midHpPhase;
     }
 
     public void progressMidHPPhase() {
-        entityData.set(DATA_HP_PHASE, entityData.get(DATA_HP_PHASE) + 1);
+        ++this.midHpPhase;
     }
 
     private void progressAttackCooldown() {
@@ -174,7 +174,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
 
     @Override
     public boolean hurt(DamageSource source, float amount) {
-        if (childToParent.values().stream().anyMatch(it -> it.equals(this))) return false;
+        if (CHILD_TO_PARENT.values().stream().anyMatch(it -> it.equals(this))) return false;
         if (getMidHPPhase() >= 2) {
             Entity entity = source.getDirectEntity();
             if (entity instanceof AbstractArrow || entity instanceof WindCharge) {
@@ -203,13 +203,13 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.NAGA.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILD_TO_PARENT.put(child, CastleKeeper.this);
                     });
 
                     it.delayServerAction(20, _it -> {
                         _it.spawnNearby(TFEntities.NAGA.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILD_TO_PARENT.put(child, CastleKeeper.this);
                         });
                     });
                 });
@@ -239,7 +239,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.LICH.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILD_TO_PARENT.put(child, CastleKeeper.this);
                     });
                     delayServerAction(20, _it -> {
                         _it.spawnNearby(TFEntities.ARMORED_GIANT.get());
@@ -265,7 +265,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.SNOW_QUEEN.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILD_TO_PARENT.put(child, CastleKeeper.this);
                     });
                 });
 
@@ -273,7 +273,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                     delayServerAction(20, it -> {
                         it.spawnNearby(TFEntities.ALPHA_YETI.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILD_TO_PARENT.put(child, CastleKeeper.this);
                         });
                     });
                 }
@@ -290,12 +290,12 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                 delayServerAction(20, it -> {
                     it.spawnNearby(TFEntities.HYDRA.get(), child -> {
                         child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                        childToParent.put(child, CastleKeeper.this);
+                        CHILD_TO_PARENT.put(child, CastleKeeper.this);
                     });
                     it.delayServerAction(20, _it -> {
                         _it.spawnNearby(TFEntities.UR_GHAST.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILD_TO_PARENT.put(child, CastleKeeper.this);
                         });
                     });
                 });
@@ -304,13 +304,13 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
                     delayServerAction(20, it -> {
                         it.spawnNearby(TFEntities.MINOSHROOM.get(), child -> {
                             child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                            childToParent.put(child, CastleKeeper.this);
+                            CHILD_TO_PARENT.put(child, CastleKeeper.this);
                         });
                         it.delayServerAction(20, _it -> {
                             for (int i = 0; i < 6; ++i) {
                                 _it.spawnNearby(TFEntities.KNIGHT_PHANTOM.get(), child -> {
                                     child.setRestrictionPoint(GlobalPos.of(child.level().dimension(), child.blockPosition()));
-                                    childToParent.put(child, CastleKeeper.this);
+                                    CHILD_TO_PARENT.put(child, CastleKeeper.this);
                                 });
                             }
                         });
@@ -350,6 +350,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     public void addAdditionalSaveData(CompoundTag compound) {
         super.addAdditionalSaveData(compound);
         compound.putString("Texture", this.getTexture());
+        compound.putByte("Phase", this.getMidHPPhase());
     }
 
     @Override
@@ -357,6 +358,9 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         super.readAdditionalSaveData(compound);
         if (compound.contains("Texture")) {
             this.setTexture(compound.getString("Texture"));
+        }
+        if (compound.contains("Phase")) {
+            this.midHpPhase = compound.getByte("Phase");
         }
     }
 

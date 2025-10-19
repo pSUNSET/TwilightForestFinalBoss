@@ -13,7 +13,7 @@ public class EntityEvents {
     @SubscribeEvent
     public static void onLivingDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof BaseTFBoss boss){
-            CastleKeeper.childToParent.remove(boss);
+            CastleKeeper.CHILD_TO_PARENT.remove(boss);
         }
     }
 }
