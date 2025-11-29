@@ -47,6 +47,7 @@ import net.minecraft.world.level.levelgen.structure.Structure;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
+import net.psunset.twilightforestfinalboss.entity.nonliving.EscapingSoul;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.ActionUtl;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
@@ -64,7 +65,7 @@ import twilightforest.init.TFEntities;
 import twilightforest.init.TFStructures;
 
 import java.util.Comparator;
-import java.util.Map;
+import java.util.HashMap;
 import java.util.Objects;
 import java.util.function.Consumer;
 
@@ -75,7 +76,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     public static final EntityDataAccessor<Integer> DATA_SWING_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_STOMP_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
     public static final EntityDataAccessor<Integer> DATA_SPOUT_CD = SynchedEntityData.defineId(CastleKeeper.class, EntityDataSerializers.INT); // ATTACK_COOLDOWN
-    public static final Map<BaseTFBoss, CastleKeeper> CHILD_TO_PARENT = Maps.newHashMap();
+    public static final HashMap<BaseTFBoss, CastleKeeper> CHILD_TO_PARENT = Maps.newHashMap();
     private final AnimatableInstanceCache cache;
     private byte midHpPhase;
     public String animation;
@@ -183,7 +184,7 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
         }
         boolean toReturn = super.hurt(source, amount);
 
-        if (toReturn) {
+        if (toReturn && !isDeadOrDying()) {
             level().playSound(null, blockPosition(), BuiltInRegistries.SOUND_EVENT.get(RLUtl.ofVanilla("entity.blaze.hurt")), SoundSource.MASTER, 4.0F, -2.0F);
 
             if (random.nextDouble() < 0.5) {
@@ -420,15 +421,20 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
     public void die(DamageSource cause) {
         getPersistentData().putDouble("CastleKeeperAttack", 0.0F);
         if (!level().isClientSide()) {
-            ((ServerLevel) level()).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 10, 0.4, 1.0F, 0.4, 0.02);
+            delayServerAction(200, self -> {
+                ((ServerLevel) self.level()).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 10, 0.4, 1.0F, 0.4, 0.02);
 
-            TwilightForestFinalBoss.LOGGER.info("Summoning escaping souls");
-            AbstractArrow arrow = TFFBEntities.ESCAPING_SOUL.get().create(level());
-            arrow.setBaseDamage(5.0F);
-//                arrow.setKnockback(1);
-            arrow.moveTo(position());
-            arrow.shoot(Mth.nextDouble(random, -0.4, 0.4), 3.5F, Mth.nextDouble(random, -0.4, 0.4), 2.0F, 0.0F);
-            level().addFreshEntity(arrow);
+                EscapingSoul soul = TFFBEntities.ESCAPING_SOUL.get().create(self.level());
+                soul.setBaseDamage(5.0F);
+                soul.setPos(self.getEyePosition());
+                soul.shoot(Mth.nextDouble(soul.getRandom(), -0.4, 0.4), 3.5F, Mth.nextDouble(soul.getRandom(), -0.4, 0.4), 1.0F, 0.0F);
+                level().addFreshEntity(soul);
+            });
+        }
+        for (BaseTFBoss child : CHILD_TO_PARENT.keySet()) {
+            if (CHILD_TO_PARENT.get(child).equals(this)) {
+                child.remove(RemovalReason.KILLED);
+            }
         }
         super.die(cause);
     }

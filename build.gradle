@@ -90,7 +90,9 @@ dependencies {
     implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
     implementation "team-twilight:twilightforest:${twilightforest_version}:universal"
 
+    runtimeOnly "curse.maven:twilight-forest-the-lost-blocks-639723:5740248"
     runtimeOnly "curse.maven:jade-324717:6291517"
+    runtimeOnly "curse.maven:jei-238222:7229074"
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

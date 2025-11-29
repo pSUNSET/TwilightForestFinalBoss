@@ -38,11 +38,7 @@
         }
       ],
       "name": "naga_scales",
-      "rolls": {
-        "type": "minecraft:uniform",
-        "max": 2.0,
-        "min": 1.0
-      }
+      "rolls": 1.0
     },
     {
       "bonus_rolls": 0.0,
@@ -65,19 +61,7 @@
         }
       ],
       "name": "lich_scepters",
-      "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": {
-          "type": "minecraft:uniform",
-          "max": 2.0,
-          "min": 1.0
-        },
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -1.0
-        }
-      }
+      "rolls": 1.0
     },
     {
       "bonus_rolls": 0.0,
@@ -110,6 +94,12 @@
                 "min": 0.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 16.0
+              }
             }
           ],
           "name": "minecraft:ender_pearl"
@@ -142,15 +132,7 @@
         }
       ],
       "name": "lich_crown",
-      "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": 1.0,
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -1.0
-        }
-      }
+      "rolls": 1.0
     },
     {
       "bonus_rolls": 0.0,
@@ -173,17 +155,9 @@
       ],
       "name": "minoshroom_stroganoff",
       "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": {
-          "type": "minecraft:uniform",
-          "max": 2.0,
-          "min": 1.0
-        },
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -1.0
-        }
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
       }
     },
     {
@@ -193,11 +167,7 @@
           "type": "minecraft:item",
           "functions": [
             {
-              "extra_count_per_player": {
-                "type": "minecraft:uniform",
-                "max": 1.0,
-                "min": -2.0
-              },
+              "extra_count_per_player": 0.33,
               "function": "twilightforest:multiplayer_addition"
             }
           ],
@@ -206,17 +176,9 @@
       ],
       "name": "minoshroom_axe",
       "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": 0.0
-        },
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -1.0
-        }
+        "type": "minecraft:uniform",
+        "max": 1.0,
+        "min": 0.0
       }
     },
     {
@@ -250,6 +212,12 @@
                 "min": 5.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 32.0
+              }
             }
           ],
           "name": "twilightforest:hydra_chop"
@@ -257,17 +225,9 @@
       ],
       "name": "hydra_chop",
       "rolls": {
-        "type": "twilightforest:multiplayer_rolls",
-        "default_rolls": {
-          "type": "minecraft:uniform",
-          "max": 2.0,
-          "min": 1.0
-        },
-        "per_player_rolls": {
-          "type": "minecraft:uniform",
-          "max": 1.0,
-          "min": -1.0
-        }
+        "type": "minecraft:uniform",
+        "max": 2.0,
+        "min": 1.0
       }
     },
     {
@@ -301,6 +261,12 @@
                 "min": 1.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 32.0
+              }
             }
           ],
           "name": "twilightforest:fiery_blood"
@@ -416,11 +382,6 @@
     },
     {
       "bonus_rolls": 0.0,
-      "entries": [],
-      "rolls": 1.0
-    },
-    {
-      "bonus_rolls": 0.0,
       "entries": [
         {
           "type": "minecraft:item",
@@ -450,6 +411,12 @@
                 "min": 1.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 32.0
+              }
             }
           ],
           "name": "twilightforest:carminite"
@@ -493,6 +460,12 @@
                 "min": 1.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 32.0
+              }
             }
           ],
           "name": "twilightforest:fiery_tears"
@@ -536,6 +509,12 @@
                 "min": 1.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 32.0
+              }
             }
           ],
           "name": "twilightforest:alpha_yeti_fur"
@@ -579,6 +558,12 @@
                 "min": 0.0
               },
               "function": "twilightforest:multiplayer_addition"
+            },
+            {
+              "function": "minecraft:limit_count",
+              "limit": {
+                "max": 16.0
+              }
             }
           ],
           "name": "twilightforest:ice_bomb"
@@ -636,7 +621,7 @@
             {
               "count": {
                 "type": "minecraft:uniform",
-                "max": 0.4,
+                "max": 0.1,
                 "min": 0.0
               },
               "enchantment": "minecraft:looting",
@@ -655,6 +640,24 @@
         }
       ],
       "name": "castle_keeper_cube_talisman",
+      "rolls": 1.0
+    },
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "twilight_forest_final_boss:optional_item",
+          "functions": [
+            {
+              "add": false,
+              "count": 1.0,
+              "function": "minecraft:set_count"
+            }
+          ],
+          "name": "tflostblocks:incomplete_thorncutter_axe"
+        }
+      ],
+      "name": "incomplete_thorncutter_axe",
       "rolls": 1.0
     }
   ],

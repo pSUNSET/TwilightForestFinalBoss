@@ -5,6 +5,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
@@ -18,8 +19,6 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
@@ -43,15 +42,17 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
         return super.getAddEntityPacket(entity);
     }
 
-    @OnlyIn(Dist.CLIENT)
+    @Override
     public ItemStack getItem() {
         return PROJECTILE_ITEM;
     }
 
+    @Override
     protected ItemStack getDefaultPickupItem() {
         return PROJECTILE_ITEM;
     }
 
+    @Override
     protected void doPostHurtEffects(LivingEntity entity) {
         super.doPostHurtEffects(entity);
         entity.setArrowCount(entity.getArrowCount() - 1);
@@ -69,11 +70,21 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
         result.getEntity().setRemainingFireTicks(100); // 5 secs
     }
 
+    @Override
     public void tick() {
         super.tick();
 
-        for (int i = 0; i < 15; ++i) {
-            level().addParticle(ParticleTypes.FLAME, getX(), getY(), getZ(), Mth.nextDouble(RandomSource.create(), -0.2, 0.2), Mth.nextDouble(RandomSource.create(), -0.2, 0.2), Mth.nextDouble(RandomSource.create(), -0.2, 0.2));
+        if (!level().isClientSide()) {
+            ((ServerLevel) level()).sendParticles(
+                    ParticleTypes.FLAME,
+                    getX(),
+                    getY(),
+                    getZ(),
+                    15,
+                    Mth.nextDouble(RandomSource.create(), -0.2, 0.2),
+                    Mth.nextDouble(RandomSource.create(), -0.2, 0.2),
+                    Mth.nextDouble(RandomSource.create(), -0.2, 0.2),
+                    1.0);
         }
 
         if (this.inGround) {
@@ -110,9 +121,9 @@ public class LobbedFireball extends AbstractArrow implements ItemSupplier {
     public static LobbedFireball shoot(LivingEntity entity, LivingEntity target) {
         LobbedFireball fireball = new LobbedFireball(TFFBEntities.LOBBED_FIREBALL.get(), entity, entity.level());
         double dx = target.getX() - entity.getX();
-        double dy = target.getY() + (double)target.getEyeHeight() - 1.1;
+        double dy = target.getY() + (double) target.getEyeHeight() - 1.1;
         double dz = target.getZ() - entity.getZ();
-        fireball.shoot(dx, dy - fireball.getY() + Math.hypot(dx, dz) * (double)0.2F, dz, 2.0F, 12.0F);
+        fireball.shoot(dx, dy - fireball.getY() + Math.hypot(dx, dz) * (double) 0.2F, dz, 2.0F, 12.0F);
         fireball.setSilent(true);
         fireball.setBaseDamage(5.0F);
 //        fireball.setKnockback(5);

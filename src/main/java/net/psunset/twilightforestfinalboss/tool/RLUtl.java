@@ -17,4 +17,8 @@ public class RLUtl {
     public static ResourceLocation ofTF(String path) {
         return TwilightForestMod.prefix(path);
     }
+
+    public static ResourceLocation ofTFLostBlocks(String path){
+        return ResourceLocation.fromNamespaceAndPath("tflostblocks", path);
+    }
 }

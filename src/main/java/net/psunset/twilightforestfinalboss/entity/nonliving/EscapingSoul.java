@@ -6,6 +6,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.server.level.ServerEntity;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.EntityType;
@@ -22,6 +23,8 @@ import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
 public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     public static final ItemStack EMPTY_ITEM = new ItemStack(Blocks.AIR);
+
+    private int existingTime = 0;
 
     public EscapingSoul(EntityType<? extends EscapingSoul> type, Level world) {
         super(type, world);
@@ -41,7 +44,6 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     }
 
     @Override
-    @OnlyIn(Dist.CLIENT)
     public ItemStack getItem() {
         return EMPTY_ITEM;
     }
@@ -62,13 +64,14 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
         super.tick();
 
         setNoGravity(true);
-        level().addParticle(ParticleTypes.SCULK_SOUL, getX(), getY(), getZ(), 0.0F, 0.0F, 0.0F);
-        level().addParticle(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 0.0F, 0.0F, 0.0F);
-
-        if (this.inGround) {
-            this.discard();
+        if (!level().isClientSide()){
+            ((ServerLevel) level()).sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY(), getZ(), 1,0.0, 0.0, 0.0, 0.0);
+            ((ServerLevel) level()).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 1,0.0, 0.0, 0.0, 0.0);
         }
 
+        if (this.inGround || ++existingTime > 100) {
+            this.discard();
+        }
     }
 
     @Override

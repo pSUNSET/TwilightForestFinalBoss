@@ -5,10 +5,7 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
-import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
-import net.psunset.twilightforestfinalboss.init.TFFBEntities;
-import net.psunset.twilightforestfinalboss.init.TFFBItems;
-import net.psunset.twilightforestfinalboss.init.TFFBTabs;
+import net.psunset.twilightforestfinalboss.init.*;
 import org.slf4j.Logger;
 
 @Mod(TwilightForestFinalBoss.ID)
@@ -25,6 +22,7 @@ public class TwilightForestFinalBoss {
         TFFBItems.SPAWN_EGGS_REGISTRY.register(bus);
         TFFBEntities.REGISTRY.register(bus);
         TFFBTabs.REGISTRY.register(bus);
+        TFFBLootPoolEntries.REGISTRY.register(bus);
     }
 
 //    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(RLUtl.of("twilight_forest_final_boss"), () -> "1", "1"::equals, "1"::equals);
