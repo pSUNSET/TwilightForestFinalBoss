@@ -8,10 +8,10 @@ An additional mod to add the final boss to The Twilight Forest mod.
 2. Adds a way to create the cube of annihilation with drops from the Castle Keeper.
 3. Adds two new advancements related to the Castle Keeper.
 
-## Requirements
-* [The Twilight Forest](https://www.curseforge.com/minecraft/mc-mods/the-twilight-forest)
-* [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib)
-* ~~[TwilightTweaks](https://www.curseforge.com/minecraft/mc-mods/twilight-tweaks)~~ (v2.0.0 and above no longer require it)
+## Dependencies
+* [The Twilight Forest](https://www.curseforge.com/minecraft/mc-mods/the-twilight-forest) (Required)
+* [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib) (Required)
+* [Twilight Forest: The Lost Blocks](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-the-lost-blocks) (Compatible)
 
 ## Versioning
 
