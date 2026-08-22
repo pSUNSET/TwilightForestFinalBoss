@@ -17,8 +17,8 @@ import net.minecraft.world.level.storage.loot.providers.number.BinomialDistribut
 import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.psunset.twilightforestfinalboss.loot.entries.OptionalLootItem;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
+import net.psunset.twilightforestfinalboss.loot.entries.OptionalLootItem;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 import org.jetbrains.annotations.NotNull;
 import twilightforest.init.TFItems;

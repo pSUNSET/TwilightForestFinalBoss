@@ -18,13 +18,13 @@ public class ActionUtl {
     private static final Collection<AbstractMap.SimpleEntry<Runnable, Integer>> workQueue = new ConcurrentLinkedQueue<>();
 
     public static void delayInServer(int tick, Runnable runnable) {
-        if (Thread.currentThread().getThreadGroup().equals(SidedThreadGroups.SERVER)){
+        if (Thread.currentThread().getThreadGroup().equals(SidedThreadGroups.SERVER)) {
             workQueue.add(new AbstractMap.SimpleEntry<>(runnable, tick));
         }
     }
 
     @SubscribeEvent
-    protected static void afterServerTick(ServerTickEvent.Post event){
+    protected static void afterServerTick(ServerTickEvent.Post event) {
         List<AbstractMap.SimpleEntry<Runnable, Integer>> actions = Lists.newArrayList();
         workQueue.forEach(it -> {
             it.setValue(it.getValue() - 1);

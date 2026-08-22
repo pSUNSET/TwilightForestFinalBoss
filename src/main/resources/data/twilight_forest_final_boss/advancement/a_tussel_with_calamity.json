@@ -1,71 +1,71 @@
 {
-  "display": {
-    "icon": {
-      "count": 1,
-      "id": "twilightforest:cube_talisman"
-    },
-    "title": {
-      "translate": "advancement.twilight_forest_final_boss.a_tussel_with_calamity.title"
-    },
-    "description": {
-      "translate": "advancement.twilight_forest_final_boss.a_tussel_with_calamity.desc",
-      "with": [
-        {
-          "translate": "entity.twilight_forest_final_boss.castle_keeper"
-        }
-      ]
-    },
-    "frame": "goal"
-  },
-  "criteria": {
-    "castle_keeper": {
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilight_forest_final_boss:castle_keeper"
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:player_killed_entity"
-    },
-    "was_in_fight": {
-      "conditions": {
-        "hurt_entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "entity": "this",
-            "predicate": {
-              "type": "twilight_forest_final_boss:castle_keeper"
-            }
-          }
-        ]
-      },
-      "trigger": "twilightforest:hurt_boss"
-    },
-    "talisman": {
-      "conditions": {
-        "items": [
-          {
-            "items": [
-              "twilightforest:cube_of_annihilation"
+    "display": {
+        "icon": {
+            "count": 1,
+            "id": "twilightforest:cube_talisman"
+        },
+        "title": {
+            "translate": "advancement.twilight_forest_final_boss.a_tussel_with_calamity.title"
+        },
+        "description": {
+            "translate": "advancement.twilight_forest_final_boss.a_tussel_with_calamity.desc",
+            "with": [
+                {
+                    "translate": "entity.twilight_forest_final_boss.castle_keeper"
+                }
             ]
-          }
+        },
+        "frame": "goal"
+    },
+    "criteria": {
+        "castle_keeper": {
+            "conditions": {
+                "entity": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "type": "twilight_forest_final_boss:castle_keeper"
+                        }
+                    }
+                ]
+            },
+            "trigger": "minecraft:player_killed_entity"
+        },
+        "was_in_fight": {
+            "conditions": {
+                "hurt_entity": [
+                    {
+                        "condition": "minecraft:entity_properties",
+                        "entity": "this",
+                        "predicate": {
+                            "type": "twilight_forest_final_boss:castle_keeper"
+                        }
+                    }
+                ]
+            },
+            "trigger": "twilightforest:hurt_boss"
+        },
+        "talisman": {
+            "conditions": {
+                "items": [
+                    {
+                        "items": [
+                            "twilightforest:cube_of_annihilation"
+                        ]
+                    }
+                ]
+            },
+            "trigger": "minecraft:inventory_changed"
+        }
+    },
+    "requirements": [
+        [
+            "castle_keeper",
+            "was_in_fight",
+            "talisman"
         ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    }
-  },
-  "requirements": [
-    [
-      "castle_keeper",
-      "was_in_fight",
-      "talisman"
-    ]
-  ],
-  "parent": "twilightforest:progression_end",
-  "sends_telemetry_event": true
+    ],
+    "parent": "twilightforest:progression_end",
+    "sends_telemetry_event": true
 }

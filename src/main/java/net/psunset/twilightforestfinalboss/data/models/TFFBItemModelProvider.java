@@ -20,7 +20,7 @@ public class TFFBItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
-        forceField(TFFBBlocks.VIOLET_FRAGILE_FIELD, RLUtl.of("block/forcefield_white"));
+        forceField(TFFBBlocks.VIOLET_FRAGILE_FIELD, RLUtl.ofTFFB("block/forcefield_white"));
 
         TFFBItems.SPAWN_EGGS_REGISTRY.getEntries().forEach(entry -> {
             spawnEggItem(entry.get());

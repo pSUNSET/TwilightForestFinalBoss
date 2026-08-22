@@ -7,7 +7,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
-import net.psunset.twilightforestfinalboss.init.TFFBItems;
 
 public class TFFBLangProvider extends LanguageProvider {
     public TFFBLangProvider(PackOutput output) {

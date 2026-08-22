@@ -29,7 +29,7 @@ import twilightforest.world.components.structures.finalcastle.FinalCastleBossGaz
 @Mixin(FinalCastleBossGazeboComponent.class)
 public abstract class FinalCastleBossGazeboComponentMixin extends TFStructureComponentOld {
     @Unique
-    private static final ResourceLocation NEW_GAZEBO_POOL = RLUtl.of("fragile_gazebo");
+    private static final ResourceLocation NEW_GAZEBO_POOL = RLUtl.ofTFFB("fragile_gazebo");
 
     public FinalCastleBossGazeboComponentMixin(StructurePieceType piece, CompoundTag nbt) {
         super(piece, nbt);

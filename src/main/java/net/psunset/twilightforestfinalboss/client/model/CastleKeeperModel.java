@@ -11,23 +11,23 @@ import software.bernie.geckolib.model.data.EntityModelData;
 
 public class CastleKeeperModel extends GeoModel<CastleKeeper> {
     public ResourceLocation getAnimationResource(CastleKeeper entity) {
-        return RLUtl.of("animations/castle_keeper.animation.json");
+        return RLUtl.ofTFFB("animations/castle_keeper.animation.json");
     }
 
     public ResourceLocation getModelResource(CastleKeeper entity) {
-        return RLUtl.of("geo/castle_keeper.geo.json");
+        return RLUtl.ofTFFB("geo/castle_keeper.geo.json");
     }
 
     public ResourceLocation getTextureResource(CastleKeeper entity) {
-        return RLUtl.of("textures/entity/castle_keeper/" + entity.getTexture() + ".png");
+        return RLUtl.ofTFFB("textures/entity/castle_keeper/" + entity.getTexture() + ".png");
     }
 
     public void setCustomAnimations(CastleKeeper animatable, long instanceId, AnimationState animationState) {
         GeoBone head = this.getAnimationProcessor().getBone("bone5");
         if (head != null) {
-            EntityModelData entityData = (EntityModelData)animationState.getData(DataTickets.ENTITY_MODEL_DATA);
-            head.setRotX(entityData.headPitch() * ((float)Math.PI / 180F));
-            head.setRotY(entityData.netHeadYaw() * ((float)Math.PI / 180F));
+            EntityModelData entityData = (EntityModelData) animationState.getData(DataTickets.ENTITY_MODEL_DATA);
+            head.setRotX(entityData.headPitch() * ((float) Math.PI / 180F));
+            head.setRotY(entityData.netHeadYaw() * ((float) Math.PI / 180F));
         }
 
     }

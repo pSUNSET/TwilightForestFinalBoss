@@ -13,7 +13,6 @@ public class TwilightForestFinalBoss {
 
     public static final Logger LOGGER = LogUtils.getLogger();
     public static final String ID = "twilight_forest_final_boss";
-//    private static final String PROTOCOL_VERSION = "1";
 
     public TwilightForestFinalBoss(ModContainer container, IEventBus bus, Dist dist) {
         TFFBBlocks.REGISTRY.register(bus);
@@ -24,13 +23,4 @@ public class TwilightForestFinalBoss {
         TFFBTabs.REGISTRY.register(bus);
         TFFBLootPoolEntries.REGISTRY.register(bus);
     }
-
-//    public static final SimpleChannel PACKET_HANDLER = NetworkRegistry.newSimpleChannel(RLUtl.of("twilight_forest_final_boss"), () -> "1", "1"::equals, "1"::equals);
-//
-//    private static int messageID = 0;
-//
-//    public static <T> void addNetworkMessage(Class<T> messageType, BiConsumer<T, FriendlyByteBuf> encoder, Function<FriendlyByteBuf, T> decoder, BiConsumer<T, Supplier<NetworkEvent.Context>> messageConsumer) {
-//        PACKET_HANDLER.registerMessage(messageID, messageType, encoder, decoder, messageConsumer);
-//        messageID++;
-//    }
 }

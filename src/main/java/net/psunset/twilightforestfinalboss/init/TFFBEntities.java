@@ -17,7 +17,8 @@ import net.psunset.twilightforestfinalboss.entity.nonliving.LobbedFireball;
 import java.util.function.Supplier;
 
 public class TFFBEntities {
-    public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, TwilightForestFinalBoss.ID);;
+    public static final DeferredRegister<EntityType<?>> REGISTRY = DeferredRegister.create(Registries.ENTITY_TYPE, TwilightForestFinalBoss.ID);
+
     public static final DeferredHolder<EntityType<?>, EntityType<CastleKeeper>> CASTLE_KEEPER = register("castle_keeper", Builder.of(CastleKeeper::new, MobCategory.MONSTER).setShouldReceiveVelocityUpdates(true).setTrackingRange(128).setUpdateInterval(3).fireImmune().sized(1.0F, 3.6F), () -> new DeferredSpawnEggItem(TFFBEntities.CASTLE_KEEPER, -1, -16777216, new Item.Properties()));
     public static final DeferredHolder<EntityType<?>, EntityType<LobbedFireball>> LOBBED_FIREBALL = register("lobbed_fireball", Builder.<LobbedFireball>of(LobbedFireball::new, MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5F, 0.5F));
     public static final DeferredHolder<EntityType<?>, EntityType<EscapingSoul>> ESCAPING_SOUL = register("escaping_soul", Builder.<EscapingSoul>of(EscapingSoul::new, MobCategory.MISC).setShouldReceiveVelocityUpdates(true).setTrackingRange(64).setUpdateInterval(1).sized(0.5F, 0.5F));

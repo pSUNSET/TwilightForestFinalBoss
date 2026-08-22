@@ -1,19 +1,19 @@
 {
-  "type": "minecraft:crafting_shapeless",
-  "category": "equipment",
-  "ingredients": [
-    {
-      "item": "twilightforest:cube_talisman"
-    },
-    {
-      "item": "twilightforest:block_and_chain"
-    },
-    {
-      "item": "twilightforest:lamp_of_cinders"
+    "type": "minecraft:crafting_shapeless",
+    "category": "equipment",
+    "ingredients": [
+        {
+            "item": "twilightforest:cube_talisman"
+        },
+        {
+            "item": "twilightforest:block_and_chain"
+        },
+        {
+            "item": "twilightforest:lamp_of_cinders"
+        }
+    ],
+    "result": {
+        "count": 1,
+        "id": "twilightforest:cube_of_annihilation"
     }
-  ],
-  "result": {
-    "count": 1,
-    "id": "twilightforest:cube_of_annihilation"
-  }
 }

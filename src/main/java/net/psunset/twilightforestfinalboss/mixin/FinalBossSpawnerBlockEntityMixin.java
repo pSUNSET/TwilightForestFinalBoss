@@ -12,9 +12,7 @@ import net.psunset.twilightforestfinalboss.entity.boss.CastleKeeper;
 import net.psunset.twilightforestfinalboss.init.TFFBBlocks;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import org.spongepowered.asm.mixin.Overwrite;
 import twilightforest.block.entity.spawner.BossSpawnerBlockEntity;
 import twilightforest.block.entity.spawner.FinalBossSpawnerBlockEntity;
 import twilightforest.entity.boss.PlateauBoss;
@@ -25,8 +23,8 @@ public abstract class FinalBossSpawnerBlockEntityMixin extends BossSpawnerBlockE
         super(type, entityType, pos, state);
     }
 
-    @Inject(method = "spawnMyBoss", at = @At("HEAD"), cancellable = true)
-    public void beforeSpawnMyBoss(ServerLevelAccessor accessor, CallbackInfoReturnable<Boolean> cir) {
+    @Overwrite
+    protected boolean spawnMyBoss(ServerLevelAccessor accessor) {
         BlockPos.betweenClosed(this.getBlockPos().offset(-10, -1, -10), getBlockPos().offset(-10, 11, 10)).forEach(it -> {
             if (level.getBlockState(it).is(TFFBBlocks.VIOLET_FRAGILE_FIELD.get())) {
                 level.removeBlock(it, false);
@@ -64,6 +62,6 @@ public abstract class FinalBossSpawnerBlockEntityMixin extends BossSpawnerBlockE
         entity.setRestrictionPoint(GlobalPos.of(entity.level().dimension(), this.getBlockPos()));
 
         // spawn it
-        cir.setReturnValue(accessor.addFreshEntity(entity));
+        return accessor.addFreshEntity(entity);
     }
 }

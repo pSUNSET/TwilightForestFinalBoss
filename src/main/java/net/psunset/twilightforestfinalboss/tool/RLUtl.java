@@ -6,7 +6,7 @@ import twilightforest.TwilightForestMod;
 
 public class RLUtl {
 
-    public static ResourceLocation of(String name) {
+    public static ResourceLocation ofTFFB(String name) {
         return ResourceLocation.fromNamespaceAndPath(TwilightForestFinalBoss.ID, name);
     }
 
@@ -18,7 +18,7 @@ public class RLUtl {
         return TwilightForestMod.prefix(path);
     }
 
-    public static ResourceLocation ofTFLostBlocks(String path){
+    public static ResourceLocation ofTFLostBlocks(String path) {
         return ResourceLocation.fromNamespaceAndPath("tflostblocks", path);
     }
 }

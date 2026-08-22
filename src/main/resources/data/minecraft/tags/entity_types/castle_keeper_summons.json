@@ -1,7 +1,7 @@
 {
-  "replace": false,
-  "values": [
-    "twilightforest:adherent",
-    "twilightforest:harbinger_cube"
-  ]
+    "replace": false,
+    "values": [
+        "twilightforest:adherent",
+        "twilightforest:harbinger_cube"
+    ]
 }

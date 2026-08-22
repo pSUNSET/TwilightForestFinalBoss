@@ -30,7 +30,7 @@ public class TFFBBlockStateProvider extends BlockStateProvider {
     }
 
     public void forceFieldLike(DeferredBlock<ForceFieldBlock> block) {
-        ResourceLocation textureLocation = RLUtl.of("block/" + block.getId().getPath());
+        ResourceLocation textureLocation = RLUtl.ofTFFB("block/" + block.getId().getPath());
         simpleBlock(block.get(), models().withExistingParent(block.getId().getPath(), ResourceLocation.withDefaultNamespace("block/block"))
 				.texture("particle", textureLocation)
 				.texture("pane", textureLocation)

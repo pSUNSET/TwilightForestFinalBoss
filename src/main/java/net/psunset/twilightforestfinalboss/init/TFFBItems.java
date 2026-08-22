@@ -1,10 +1,5 @@
 package net.psunset.twilightforestfinalboss.init;
 
-import net.minecraft.core.registries.Registries;
-import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.common.DeferredSpawnEggItem;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import net.psunset.twilightforestfinalboss.TwilightForestFinalBoss;
 

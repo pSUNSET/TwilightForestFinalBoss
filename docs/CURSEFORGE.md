@@ -4,31 +4,35 @@ An additional mod to add the final boss to The Twilight Forest mod.
 
 ## Features
 
-1. Adds a final boss to the Twilight Forest called the Castle Keeper, which has unique animations, attacks, phases, and loot.
+1. Adds a final boss to the Twilight Forest called the Castle Keeper, which has unique animations, attacks, phases, and
+   loot.
 2. Adds a way to create the cube of annihilation with drops from the Castle Keeper.
 3. Adds two new advancements related to the Castle Keeper.
 
 ## Dependencies
+
 * [The Twilight Forest](https://www.curseforge.com/minecraft/mc-mods/the-twilight-forest) (Required)
 * [GeckoLib](https://www.curseforge.com/minecraft/mc-mods/geckolib) (Required)
-* [Twilight Forest: The Lost Blocks](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-the-lost-blocks) (Compatible)
+* [Twilight Forest: The Lost Blocks](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-the-lost-blocks)
+  (Compatible)
 
 ## Versioning
 
-* The version shown in files is in the fixed format, `${mod_version}+${twilightforest_version}+${mc_version}`. They mean the environment we successfully tested. If there's any problem to crash, please try the closer version of minecraft or twilight forest mod.
+* The version shown in files is in the fixed format, `${mod_version}+${twilightforest_version}+${mc_version}`. They mean
+  the environment we successfully tested. If there's any problem to crash, please try the closer version of minecraft or
+  twilight forest mod.
 
 ## Notes
 
-This mod is a maintained version.
-The original one isn't updated anymore.
-After getting the permission from the original author, D_Angry_Modder,
-this new project was created.
+This mod is a maintained version. The original one isn't updated anymore. After getting the permission from the original
+author, D_Angry_Modder, this new project was created.
 
-It isn't just a copy of the original one, but a remake.
-There are several differences between this one and original one.
+It isn't just a copy of the original one, but a remake. There are several differences between this one and original one.
 I will continue to update this mod until the TwilightForest official mod updates its actual final boss.
 
 Finally, hope you enjoy this mod!
 
 ## Original Mod
-* [Twilight Forest Final Boss](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-final-boss) by [D_Angry_Modder](https://www.curseforge.com/members/d_angry_modder)
+
+* [Twilight Forest Final Boss](https://www.curseforge.com/minecraft/mc-mods/twilight-forest-final-boss)
+  by [D_Angry_Modder](https://www.curseforge.com/members/d_angry_modder)

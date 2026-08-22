@@ -16,8 +16,6 @@ import net.minecraft.world.entity.projectile.ItemSupplier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
 import net.psunset.twilightforestfinalboss.init.TFFBEntities;
 import net.psunset.twilightforestfinalboss.tool.RLUtl;
 
@@ -64,9 +62,9 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
         super.tick();
 
         setNoGravity(true);
-        if (!level().isClientSide()){
-            ((ServerLevel) level()).sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY(), getZ(), 1,0.0, 0.0, 0.0, 0.0);
-            ((ServerLevel) level()).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 1,0.0, 0.0, 0.0, 0.0);
+        if (!level().isClientSide()) {
+            ((ServerLevel) level()).sendParticles(ParticleTypes.SCULK_SOUL, getX(), getY(), getZ(), 1, 0.0, 0.0, 0.0, 0.0);
+            ((ServerLevel) level()).sendParticles(ParticleTypes.SOUL_FIRE_FLAME, getX(), getY(), getZ(), 1, 0.0, 0.0, 0.0, 0.0);
         }
 
         if (this.inGround || ++existingTime > 100) {
@@ -106,9 +104,9 @@ public class EscapingSoul extends AbstractArrow implements ItemSupplier {
     public static EscapingSoul shoot(LivingEntity entity, LivingEntity target) {
         EscapingSoul arrow = new EscapingSoul(TFFBEntities.ESCAPING_SOUL.get(), entity, entity.level());
         double dx = target.getX() - entity.getX();
-        double dy = target.getY() + (double)target.getEyeHeight() - 1.1;
+        double dy = target.getY() + (double) target.getEyeHeight() - 1.1;
         double dz = target.getZ() - entity.getZ();
-        arrow.shoot(dx, dy - arrow.getY() + Math.hypot(dx, dz) * (double)0.2F, dz, 2.0F, 12.0F);
+        arrow.shoot(dx, dy - arrow.getY() + Math.hypot(dx, dz) * (double) 0.2F, dz, 2.0F, 12.0F);
         arrow.setSilent(true);
         arrow.setBaseDamage(5.0F);
 //        arrow.setKnockback(5);
