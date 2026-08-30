@@ -3,6 +3,15 @@ plugins {
     id 'maven-publish'
     id 'idea'
     id 'net.neoforged.moddev' version '2.0.142'
+    id "me.modmuss50.mod-publish-plugin" version "2.0.0"
+}
+
+def secrets = new Properties()
+def secretsFile = file('secrets.properties')
+if (secretsFile.exists()) {
+    secretsFile.withInputStream {
+        stream -> secrets.load(stream)
+    }
 }
 
 version = "$mod_version+$twilightforest_version+$minecraft_version"
@@ -143,5 +152,31 @@ idea {
     module {
         downloadSources = true
         downloadJavadoc = true
+    }
+}
+
+publishMods {
+    file = jar.archiveFile
+    changelog = file("CHANGELOG.md").text
+    type = STABLE
+    modLoaders.add("neoforge")
+
+    curseforge {
+        accessToken = secrets.getProperty("CURSEFORGE_TOKEN")
+        projectId = "1267766"
+
+        displayName = "v$mod_version + TF$twilightforest_version + MC$minecraft_version"
+        version.set "$mod_version+$twilightforest_version+$minecraft_version"
+
+        minecraftVersions.add("1.21.1")
+        javaVersions.add(JavaVersion.VERSION_21)
+
+        client = true
+        server = true
+
+        requires("geckolib", "the-twilight-forest")
+        optional("twilight-forest-the-lost-blocks")
+
+        changelogType = "markdown"
     }
 }
