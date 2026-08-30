@@ -1,0 +1,2 @@
+- Fixes
+    - Game crash while boss moves toward a target. (#2)
