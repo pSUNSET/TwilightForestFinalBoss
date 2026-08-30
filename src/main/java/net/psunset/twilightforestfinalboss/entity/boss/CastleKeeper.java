@@ -896,6 +896,8 @@ public class CastleKeeper extends BaseTFBoss implements GeoEntity {
 
         @Override
         public boolean canUse() {
+            boolean flag = super.canUse();
+            if (flag) return true;
             LivingEntity target = this.mob.getTarget();
             return target != null && target.distanceToSqr(this.mob) <= (double) (this.within * this.within);
         }
